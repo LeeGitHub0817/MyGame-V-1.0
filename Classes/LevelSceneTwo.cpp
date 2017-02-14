@@ -21,16 +21,26 @@ Scene *GameLevel2::createScene()
 
 bool GameLevel2::init()
 {
-	if (GameParentScene::init() == NULL)
+	if (Layer::init() == NULL)
 	{
 		return false;
 	}
-	
+
 
 	return true;
 }
 
 void GameLevel2::onEnterTransitionDidFinish()
 {
-	GameParentScene::onEnterTransitionDidFinish();
+	Layer::onEnterTransitionDidFinish();
+}
+
+void GameLevel2::onExit()
+{
+	Layer::onExit();
+}
+
+void GameLevel2::onEnter()
+{
+	Layer::onEnter();
 }

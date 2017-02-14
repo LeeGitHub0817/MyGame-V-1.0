@@ -95,13 +95,14 @@ void ReadyScene::onEnter()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
 	//////播放动画//////
+	//第一个动画
 	auto sprite1 = Sprite::createWithSpriteFrameName("Yellow_Horiz0.png");
 	sprite1->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + sprite1->getContentSize().height / 2));
 	this->addChild(sprite1);
 
 	//创建动画
 	Animation *animation_load = Animation::create();
-	for (int i = 0; i < 6; ++i)
+	for (int i = 0; i < 9; ++i)
 	{
 		__String *frameName = __String::createWithFormat("Yellow_Horiz%d.png", i);
 		SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(frameName->getCString());
@@ -133,7 +134,7 @@ void ReadyScene::onEnter()
 
 	//创建动画
 	Animation *animation_load2 = Animation::create();
-	for (int i = 0; i < 6; ++i)
+	for (int i = 0; i < 9; ++i)
 	{
 		__String *frameName = __String::createWithFormat("Pink_Horiz%d.png", i);
 		SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(frameName->getCString());

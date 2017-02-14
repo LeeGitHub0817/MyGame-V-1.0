@@ -87,9 +87,55 @@ void GameParentScene::update(float delta)
 	ball->colloideWithPaddle(paddle);
 	if (ball->getPositionY() < VisibleRect::bottom().y - ball->radius())
 	{
-		Director::getInstance()->replaceScene(GameOver::createScene(false));
-	}
+		//Director::getInstance()->replaceScene(GameOver::createScene(false));
+		auto visibleSize = Director::getInstance()->getVisibleSize();
 
+		//播放音乐
+		if (UserDefault::getInstance()->getBoolForKey(SOUND_KEY))
+		{
+			SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+			SimpleAudioEngine::getInstance()->playEffect("sound/game_level_fail.mp3");
+		}
+
+		//暂停当前层的内容
+		this->pause();
+
+		auto nodes = this->getChildren();
+		for (const auto &node : nodes)
+		{
+			node->pause();
+		}
+
+		//文字
+		auto label = Label::createWithTTF("You Lose!", "fonts/Marker Felt.ttf", 82);
+		label->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + 80));
+		this->addChild(label);
+
+		//重玩本关
+		auto restartButtonNor = Sprite::createWithSpriteFrameName("start_end_btn_restart_nor.png");
+		auto restartButtonSel = Sprite::createWithSpriteFrameName("start_end_btn_restart_sel.png");
+
+		auto restartButton = MenuItemSprite::create(restartButtonNor,
+			restartButtonSel,
+			CC_CALLBACK_1(GameParentScene::gameOverJump, this));
+		restartButton->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 - 80));
+		restartButton->setTag(500);
+
+		//返回主菜单
+		auto backMainButtonNor = Sprite::createWithSpriteFrameName("general_btn_back_main_nor.png");
+		auto backMainButtonSel = Sprite::createWithSpriteFrameName("general_btn_back_main_sel.png");
+
+		auto backMainButton = MenuItemSprite::create(backMainButtonNor,
+			backMainButtonSel,
+			CC_CALLBACK_1(GameParentScene::gameOverJump, this));
+		backMainButton->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+		backMainButton->setTag(600);
+
+		auto menu = Menu::create(restartButton, backMainButton, NULL);
+		menu->setPosition(Vec2::ZERO);
+		this->addChild(menu);
+
+	}
 }
 
 void GameParentScene::addMonster()
@@ -433,6 +479,22 @@ void GameParentScene::levelFinishedJump(Ref *pSender)
 
 		break;
 
+	default:
+		break;
+	}
+}
+
+void GameParentScene::gameOverJump(cocos2d::Ref * pSender)
+{
+	auto target = (MenuItem *)pSender;
+	switch (target->getTag())
+	{
+	case 500:
+		Director::getInstance()->replaceScene(GameParentScene::createScene());
+		break;
+	case 600:
+		Director::getInstance()->replaceScene(ReadyScene::createScene());
+		break;
 	default:
 		break;
 	}

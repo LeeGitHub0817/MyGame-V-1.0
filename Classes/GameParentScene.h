@@ -12,11 +12,10 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include "Monster.h"
-#include "GameOverScene.h"
 #include "ReadyScene.h"
 
 
-/*此类为游戏场景的父类*/
+/*此类为游戏关卡1*/
 
 class GameParentScene : public cocos2d::Layer
 {
@@ -50,6 +49,8 @@ public:
 	void levelFinished();//赢得关卡结束跳出的内容
 
 	void levelFinishedJump(cocos2d::Ref *pSender);//点击相关按钮后做出的内容
+
+	void gameOverJump(cocos2d::Ref *pSender); //游戏结束后按钮跳转
 
 };
 

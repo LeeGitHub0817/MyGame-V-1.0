@@ -1,4 +1,5 @@
 #include "GameScrollScene.h"
+#include "LevelSceneTwo.h"
 
 USING_NS_CC_EXT;
 USING_NS_CC;
@@ -61,6 +62,58 @@ bool GameScrollScene::init()
 			Menu *menu = Menu::create(menuItemStart, NULL);
 			menu->setPosition(Vec2::ZERO);
 			layer->addChild(menu);
+
+			//添加精灵动画1
+			auto spriteAni1 = Sprite::createWithSpriteFrameName("Blue_Horiz0.png");
+			spriteAni1->setPosition(Vec2(sprite->getPosition().x - 100, sprite->getPosition().y));
+			layer->addChild(spriteAni1);
+
+			auto animation1 = Animation::create();
+			for (int i = 0; i < 9; ++i)
+			{
+				__String *frameName = __String::createWithFormat("Blue_Horiz%d.png", i);
+				SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(frameName->getCString());
+				animation1->addSpriteFrame(spriteFrame);
+			}
+			animation1->setDelayPerUnit(0.05f);
+			animation1->setRestoreOriginalFrame(true);
+
+			spriteAni1->runAction(RepeatForever::create(Animate::create(animation1)));
+
+
+			//添加精灵动画2
+			auto spriteAni2 = Sprite::createWithSpriteFrameName("Green_Horiz0.png");
+			spriteAni2->setPosition(Vec2(sprite->getPosition().x, sprite->getPosition().y));
+			layer->addChild(spriteAni2);
+
+			auto animation2 = Animation::create();
+			for (int i = 0; i < 9; ++i)
+			{
+				__String *frameName = __String::createWithFormat("Green_Horiz%d.png", i);
+				SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(frameName->getCString());
+				animation2->addSpriteFrame(spriteFrame);
+			}
+			animation2->setDelayPerUnit(0.05f);
+			animation2->setRestoreOriginalFrame(true);
+
+			spriteAni2->runAction(RepeatForever::create(Animate::create(animation2)));
+
+			//添加精灵动画3
+			auto spriteAni3 = Sprite::createWithSpriteFrameName("Pink_Horiz0.png");
+			spriteAni3->setPosition(Vec2(sprite->getPosition().x + 100, sprite->getPosition().y));
+			layer->addChild(spriteAni3);
+
+			auto animation3 = Animation::create();
+			for (int i = 0; i < 9; ++i)
+			{
+				__String *frameName = __String::createWithFormat("Pink_Horiz%d.png", i);
+				SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(frameName->getCString());
+				animation3->addSpriteFrame(spriteFrame);
+			}
+			animation3->setDelayPerUnit(0.05f);
+			animation3->setRestoreOriginalFrame(true);
+
+			spriteAni3->runAction(RepeatForever::create(Animate::create(animation3)));
 		}
 
 		//返回按钮
@@ -196,6 +249,9 @@ void GameScrollScene::menuStartCallback(cocos2d::Ref * pSender)
 	{
 	case 1:
 		Director::getInstance()->replaceScene(GameParentScene::createScene());
+		break;
+	case 2:
+		Director::getInstance()->replaceScene(GameLevel2::createScene());
 		break;
 	default:
 		break;

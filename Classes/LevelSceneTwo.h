@@ -1,14 +1,12 @@
-#ifndef __GAME_SCENE_LEVEL1_H__
-#define __GAME_SCENE_LEVEL1_H__
+#ifndef __LEVEL_SCENE_TWO_H__
+#define __LEVEL_SCENE_TWO_H__
 
 #include "cocos2d.h"
 #include "SystemHeader.h"
 
-#include "GameParentScene.h"
-
 /*此类实现关卡2*/
 
-class GameLevel2 : public GameParentScene
+class GameLevel2 : public cocos2d::Layer
 {
 public:
 	static cocos2d::Scene *createScene();
@@ -16,7 +14,9 @@ public:
 	CREATE_FUNC(GameLevel2);
 
 	void onEnterTransitionDidFinish();
+	void onExit();
+	void onEnter();
 };
 
-#endif // !__GAME_SCENE_LEVEL2_H__
+#endif // !__LEVEL_SCENE_TWO_H__
 
